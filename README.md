@@ -5,23 +5,9 @@ Welcome to the companion repository for our position paper on Music Performance 
 ## Content
 
 - [Background](#background)
-- [Structure](#structure)
 - [Datasets](#datasets)
 - [Methods](#methods)
-- [Analysis](#analysis)
-
-## Structure
-
-Below is a visualized view of the repository.
-
-```text
-.
-├─ methods/
-│   ├─ Amuse.pdf
-│   └─ … (more papers)
-├─ figs/
-└─ README.md
-```
+- [Description](#description)
 
 ## Background
 
@@ -92,13 +78,24 @@ The table below summarizes key milestone models in Visual and Audio-Visual QA, l
 | 2024 | VITA           | [VITA: Towards Open-Source Interactive Omni Multimodal LLM](https://arxiv.org/pdf/2408.05211)                                                                                                                                                                   | CoRR 24'           | [Github](https://github.com/VITA-MLLM/VITA)                         |
 | 2025 | Qwen2.5-VL     | [Qwen2.5-VL Technical Report](https://arxiv.org/pdf/2502.13923)                                                                                                                                                                                                 | -                  | [Github](https://github.com/QwenLM/Qwen2.5-VL)                      |
 
-## Analysis
+## Description
 
-Figures (a) and (b) below visualize the average performance of popular methods across the five canonical Music-AVQA question types on the original Music-AVQA and Music-AVQA-R, respectively. Methods without explicit spatial-temporal design are shaded in blue, while methods that incorporate dedicated spatial-temporal modules are shown in green and purple. A clear accuracy gap illustrates how spatial-temporal reasoning benefits both in-distribution and out-of-distribution scenarios. Full numerical results and an extended discussion can be found in the main paper.
-| (a) Methods on Music-AVQA. | (b) Methods on Muisc-AVQA-R. |
-|---------------|---------------|
-| ![Fig-(a)](https://i.imgur.com/GJByBtw.png) | ![Fig-(b)](https://imgur.com/PLzjd2B.png) |
-
-```
-
-```
+The table below illustrates methods incorporating explicit spatial-temporal design components in detailed.
+| Method | Brief Description |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Amuse | Focuses on music-performance scenarios by aligning time segments in both audio and video streams via a cross-attention paradigm. Exploits beat-/note-level alignment to model subtle temporal dependencies, aiding questions that involve simultaneous or evolving instrument patterns. |
+| AVST | Proposes a spatio-temporal grounded approach that localizes sounding objects per frame and applies question-guided temporal attention. Combines localized visual features with temporal cues for stronger spatial-temporal reasoning. |
+| CIGN | Learns audio-visual class tokens and an Audio-Visual Continual Grouping module that clusters spectrogram regions and image patches at every step, tracking objects/sounds across time for temporally consistent reasoning. |
+| DCL | Introduces Disentangled Counterfactual Learning: a VAE splits signals into static vs. dynamic factors, and a counterfactual intervention module enables causal reasoning over temporal event relationships. |
+| DG-SCT | Dual-Guided Spatial-Channel-Temporal attention layer injected into frozen transformers; bidirectional audio↔vision prompts highlight salient regions, channels, and time segments for fine-grained alignment. |
+| EEMC | Segments audio/video into 1 s slices and fuses them with text via a Temporal Bi-modal Transformer with cached memory, magnifying sudden temporal changes for precise evolving-object localisation. |
+| LAST-Att | Repeated cross-attention between Swin-Transformer-v2 (vision) and an Audio Spectrogram Transformer; iteratively attends to key frames/patches, localising musical actions over time. |
+| LAVisH | Adds Latent Audio-Visual Hybrid adapters to every ViT layer; a pool of latent tokens acts as a cross-attention bottleneck so audio frames gate visual tokens throughout video playback. |
+| LAViT | For 360° videos: augments patches with quaternion-based spherical coords and aligns them with audio via contrastive learning, enabling reasoning about where/when a sound arises on the sphere. |
+| LSTTA | Parameter-efficient transfer learning with adapters; splits temporal modelling into short-term semantic interaction and long-term filtering, refining when/how long instruments contribute. |
+| MAVEN | Cycles audio, video and text logits with debiasing constraints, anchoring questions to correct temporal segments while suppressing spurious modality correlations. |
+| MCCD | Multifaceted Cycle-Collaborative Debiasing: KL penalties widen uni- vs. tri-modal gaps per timestep and force unimodal paths to agree, stabilising spatial-temporal grounding under shift. |
+| Meerkat | Two-stage fine-grained grounding: AV Optimal Transport aligns audio with image patches, then AV Attention Consistency refines maps to locate sources within bounding boxes. |
+| PSTP-Net | Progressive Spatio-Temporal Perception: (1) Temporal Segment Selection, (2) Spatial Region Selection, (3) Audio-guided Visual Attention isolate question-relevant info step-by-step. |
+| RefAtomNet | Three-stream network (visual, text, location-semantic) with agent-attention blocks; location tokens give bounding-box hints over time for tight spatial-temporal coupling of atomic actions. |
+| VideoLLaMA-2 | Uses Spatial-Temporal Convolution connector to mix per-frame spatial info then downsample temporally; a synced audio branch injects spectrogram tokens for holistic AV QA. |
